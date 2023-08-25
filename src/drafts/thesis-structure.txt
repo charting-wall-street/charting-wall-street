@@ -1,0 +1,251 @@
+# Thesis Corpus Structure
+
+## Title Proposal
+
+**Charting Wall Street: Detecting Common Trading Patterns and Assessing Their Relevance in Today's Automated Landscape**
+
+*Explanation (not to be in the thesis) for the (not final) title, to remind myself what I'm trying to document:*
+
+Charting is used to reference to both the term "chart" in the stock market, as well as the mapping of the patterns that exist within stocks. "Charting the Stock Market" was a better title, but there already exists a book with that title. Wall Street is also relevant, since the dataset only contains NYSE stocks.
+
+Since we mainly focus on trading patterns that are already known, we talk about "common trading patterns". "Detecting" is to make it clear that we are not identifying any new patterns, but are trying to improve and document detection techniques.
+
+Since it isn't strictly about machine learning, I omitted ML in the title. It is however important that we mention relevance to today's markets, since there are a lot of papers that have been written pre-computer-era (which all similar sounding titles).
+
+ - The initial motivation was to verify if the idea behind patterns (which retail traders use) are actually useful, or if it's just some hype to die off and come back in the next decade.
+
+ - The initial question we ask is: how we can detect these patterns using machine learning techniques?
+
+ - The follow-up question is: now that we have our patterns, are they useful?
+
+ - The difficulty was: how can I structure raw stock data so that I can analyse and visualise it in real-time?
+
+## Table of Contents Draft
+
+1. Introduction
+2. Background
+2.1 Terminology
+2.2 The Stock Market and Patterns
+3. Literature Review
+3.1 Patterns of the Stock Market
+3.2 Detecting Patterns
+3.2.1 Clustering Patterns
+3.2.2 Other detection methods
+3.3 Predictability of Patterns
+4. Prerequisite Work
+4.1. Data Collection and Preparation
+4.1.1 Data Sources
+4.1.2 Data Selection
+4.1.3 Data Preprocessing
+4.2 Infrastructure development
+4.2.1 Distributing work between micro-services
+4.2.2 Formatting candles and derivatives
+4.2.3 Passing data between micro-services
+4.3 Visualisation development
+4.3.1 Streaming data to React
+4.3.2 Plotting candles and indicators
+5. Processing
+5.1 Candle daemon
+5.1.1 Interval blocks
+5.1.2 Transition blocks
+5.1.3 Splits
+5.2 Indicator daemon
+5.3 Algorithm daemon
+5.3.1 Algorithm server
+5.3.2 Algorithm client package
+5.3.3 Algorithm scripts
+6 Detecting Patterns
+6.1. Approach 1: Clustering patterns
+6.1.1 Feature extraction
+6.1.2 Selection of indicators and parameters
+6.1.3 Window size and overlap
+6.1.4 Distance algorithms
+6.1.5 Clustering techniques
+6.1.5.1 Bottom-up clustering
+6.1.5.2 Top-down clustering
+6.1.6 Optimisations
+6.2 Approach 2: Manual pattern detection
+6.2.1 Dealing with time warping
+6.2.2 Highs and lows detection
+6.2.3 Double bottom and top detection
+6.2.4 (Head and shoulders)
+6.2.5 Trend line detection
+6.2.6 (Falling and rising wedge)
+6.2.7 (Consolidation and flags)
+6.2.8 (Triangles)
+7 Evaluating Patterns
+7.1 Triple Barrier Evaluation
+7.2 Comparative Analysis
+7.2.1 Detected patterns
+7.2.3 Market indices
+7.2.2 Random walk patterns
+7.2.4 Single event trades
+8 Results and discussion
+8.1 Performance metrics
+8.2 Approach 1: Clustering
+8.2.1 Comparing indicator events
+8.2.2 Comparing clustering techniques
+8.2.3 Summary
+8.3 Approach 2: Manual detection
+8.3.1 Pattern A
+8.3.2 Pattern B
+8.3.3 Pattern C
+8.3.4 Summary
+8.4 Evaluation
+8.4.1 Comparing approaches
+8.4.2 Market indices
+8.4.3 Random walks
+8.4.4 Single events
+8.5 Statistical analysis
+8.6 Risk analysis
+9 Conclusion
+
+## Table of Contents Detailed
+
+1. Introduction
+	...
+
+2. Background
+	A section that can be skipped for those that already have a basic knowledge of the stock market. Otherwise the most minimal explanation needed to understand the rest of the paper.
+2.1 Terminology
+	Explain commonly used terms that will be used throughout the thesis.
+2.2 The Stock Market and Patterns
+	Briefly explain why patterns are a thing.
+
+3. Literature Review
+3.1 Patterns of the Stock Market
+	List books and their patterns from the past century. List the most common patterns aggregated from those sources. Aggregate a list of patterns that we'll try to detect.
+3.2 Detecting Patterns
+	List existing work on pattern detection, this will be mostly machine learning.
+3.2.1 Clustering Patterns
+	List methods of clustering pattern-like instances.
+3.2.2 Other detection methods
+	Things like trendline detection using k-means, etc.
+3.3 Predictability of Patterns
+	List existing work that claim if patterns work, or don't work. There are a lot of papers, so this will have to be condensed somewhat. Ideally it'd be a list of "double-bottom" is claimed to work most of the time, so that we can reference back to this in the results.
+
+4. Prerequisite Work
+	This should mainly encompass al the low level stuff. The origin of our data, how it is stored, encoded and cached. A brief overview of the infrastructure.
+4.1. Data Collection and Preparation
+	Describe where the data comes from, and what raw data we use.
+4.1.1 Data Sources
+	Mention EOD and Binance. All data is public, but the data in this thesis comes from these sources. If someone wishes to reproduce the results, he should be able to use any service. Mention what kind of data was used: candles, splits, historical company statistics.
+4.1.2 Data Selection
+	Explain how we choose our selection of stocks and why. We chose it based on: number of data points and company valuation.
+4.1.3 Data Preprocessing
+	Market data is always sparse, we fill all gaps in the data so that we can access any point in using its index. This then gets stored in large blocks, which can stored onto disk. Overkill for daily data, but necessary for minute data.
+4.2 Infrastructure development
+	Explain how every program is a micro-service, making it able to cache as much as possible in our pipeline.
+4.2.1 Distributing work between micro-services
+	Briefly explain the role for each micro-service.
+4.2.2 Formatting candles and derivatives
+	Explain how everything is passed around as the same block of data, making it easy to index.
+4.2.3 Passing data between micro-services
+	Explain how optimisations needed to be done to make it feasible to send large payloads around with minimal overhead. Show some benchmark here since this was one of the largest technical pains.
+4.3 Visualisation development
+	Briefly explain the visualisation tool. How blocks made it trivial to plot data. How html canvas was the only performant option in a shallow sea of plotting tools.
+4.3.1 Streaming data to React
+	Briefly explain how data is streamed, how it doesn't cause memory leaks and makes sure that CPU is the only bottleneck when it comes to plotting lots of data points (compared to commercial tools which use a lot of RAM).
+4.3.2 Plotting candles and indicators
+	Nothing inherently difficult here. Explain briefly how candles are drawn. Most technical work was not noteworthy.
+
+5. Processing
+5.1 Candle daemon
+5.1.1 Interval blocks
+	Take candle blocks, and makes new candle blocks for different time intervals.
+5.1.2 Transition blocks
+ 	Also makes it possible to show the progression of a single candle, so that we can e.g. evaluate a one day candle's progression for each passing hour.
+5.1.3 Splits
+	Applying of splits, which was needed for continuity.
+5.2 Indicator daemon
+	Contains a lot of indicators, which are simple functions. Hardest part was to reduce the amount of recalculations happening while running calculation multithreaded. A dataflow chart would be nice here.
+5.3 Algorithm daemon
+	Exists as a server, which can execute algorithm scripts. Also exists as a package, containing all the logic to communicate with each data provider, and call other algorithms.
+5.3.1 Algorithm server
+	Briefly explain server structure of managing sub-processes. Which also compiles them each time it is ran, making it easy to quickly test out changes.
+5.3.2 Algorithm client package
+	A dataflow chart would nicely describe the work done. Mostly writing interface that can run concurrently.
+5.3.3 Algorithm scripts
+	Describe the simple interface that can be used to write any pattern detecting algorithm. This makes it possible to take all of the data logistics from the detection and analysis part of the thesis. Initially it was used to detect events, but the code was expanded to make it possible to detect patterns as well (since this needed recursive call to other algorithm scripts).
+
+6 Detecting Patterns
+6.1. Approach 1: Clustering patterns
+6.1.1 Feature extraction
+	Discussing the types of features. In this case ints which represent a positive or negative market event. Discussing the alternatives.
+6.1.2 Selection of indicators and parameters
+	Justify the set of indicators which are used for patterns. Why these indicators, why not others. Each indicator has a few required parameters, discuss why these are optimal.
+6.1.3 Window size and overlap
+	Determining the size of each pattern and its overlap.
+6.1.4 Distance algorithms
+	Different approaches for calculating distances between patterns.
+6.1.5 Clustering techniques
+	Explain approaches, which ones did not work.
+6.1.5.1 Bottom-up clustering
+	...
+6.1.5.2 Top-down clustering
+	...
+6.1.6 Optimisations
+	Hacks and techniques to improve efficiency. Examples are distance formula optimisations, making sparse arrays from our patterns. Skipping empty patterns. Merge equivalent patterns in a first pass.
+
+6.2 Approach 2: Manual pattern detection
+6.2.1 Dealing with time warping
+	Explain how parameters have a large impact to the kind of parameters being detected here.
+6.2.2 Highs and lows detection
+	Easy to detect. Based on window size.
+6.2.3 Double bottom and top detection
+	Easy to detect. Not as many as expected.
+6.2.4 (Head and shoulders)
+	TBA
+6.2.5 Trend line detection
+	Describe different approaches on detecting time lines.
+6.2.6 (Falling and rising wedge)
+	TBA, if time is left
+6.2.7 (Consolidation and flags)
+	TBA, if time is left
+6.2.8 (Triangles)
+	TBA
+
+7 Evaluating Patterns
+	This section describes the way that we will evaluate each method.
+7.1 Triple Barrier Evaluation
+	Describe the triple barrier method, as it is the most disciplined way of evaluation performance.
+7.2 Comparative Analysis
+7.2.1 Detected patterns
+	Our results of detecting them. Show patterns that are detected with clustering, and with manually detection.
+7.2.3 Market indices
+	Split our dataset into folds. See how buy-and-hold compares to trading on patterns.
+7.2.2 Random walk patterns
+	Split into folds. But make entry at random points in time.
+7.2.4 Single event trades
+	Compare the trading of patterns to the trading of things like EMA crosses. Does it make sense to trade patterns, or are they just as likely as trading events. (I don't expect the odds to be the same, so this would be more like a sanity check).
+
+8 Results and discussion
+8.1 Performance metrics
+	Show Sharpe-ratio, this is an expected metric for a financial thesis. Describe the factors (win/loss) used for our triple-barrier method. Other metrics exist, but we don't have variation in profit or loss, so this might be enough.
+8.2 Approach 1: Clustering
+8.2.1 Comparing indicator events
+8.2.2 Comparing clustering techniques
+8.2.3 Summary
+8.3 Approach 2: Manual detection
+8.3.1 Pattern A
+8.3.2 Pattern B
+8.3.3 Pattern C
+8.3.4 Summary
+8.4 Evaluation
+8.4.1 Comparing approaches
+8.4.2 Market indices
+8.4.3 Random walk
+8.4.4 Single events
+8.5 Statistical analysis
+	Probably z-test.
+8.6 Risk analysis
+	Using patterns involves a risk, determine that risk and explain it here.
+
+9 Conclusion
+...
+
+
+
+
+
+

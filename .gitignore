@@ -1,0 +1,13 @@
+.DS_Store
+.idea
+src/*.md
+src/*.pdf
+src/summaries
+src/reviews
+src/summary.txt
+!src/title.pdf
+!src/ttb.pdf
+scripts/data-selection/data
+src/build
+feedback
+src/scripts/review
