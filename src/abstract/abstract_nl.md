@@ -7,7 +7,7 @@ numbersections: true
 
 \title{Charting Wall Street: Detecting Common Trading Patterns and Assessing Their Relevance in Today's Automated Landscape}
 \author{Rudolf \textsc{Aelbrecht}}
-\date{\today}
+\date{August 24, 2023}
 \pagenumbering{gobble}
 
 \maketitle

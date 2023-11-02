@@ -7,7 +7,7 @@ numbersections: true
 
 \title{Charting Wall Street: Detecting Common Trading Patterns and Assessing Their Relevance in Today's Automated Landscape}
 \author{Rudolf \textsc{Aelbrecht}}
-\date{\today}
+\date{August 24, 2023}
 \pagenumbering{gobble}
 
 \maketitle
@@ -79,9 +79,9 @@ The journey into pattern detection started with a machine learning-driven cluste
 
 However, this approach was more intricate than we initially thought. Rather than isolating distinct recurring patterns, we encountered numerous high-frequency patterns. Many of these seemed to echo random market changes instead of clear trends. These issues, combined with the computational challenges of clustering, led us to rethink the strategy.
 
-We shifted to a script-based detection method, focusing on established patterns often discussed in financial studies. We specifically emphasized the double top and double top patterns, choosing them for their regular appearance in market data and their straightforward descriptions.
+We shifted to a script-based detection method, focusing on established patterns often discussed in financial studies. We specifically emphasized the double bottom and double top patterns, choosing them for their regular appearance in market data and their straightforward descriptions.
 
-The script-based approach came with its own set of challenges, primarily due to noisy data and unexpected anomalies. Yet, with the structured engineering of the pipeline, implementation was more straightforward. We were able to reliably identify patterns such as the double top, double top, triple bottom, triple top, and head and shoulders in the market data. Subsequent steps involved evaluating these patterns based on their occurrence and performance.
+The script-based approach came with its own set of challenges, primarily due to noisy data and unexpected anomalies. Yet, with the structured engineering of the pipeline, implementation was more straightforward. We were able to reliably identify patterns such as the double bottom, double top, triple bottom, triple top, and head and shoulders in the market data. Subsequent steps involved evaluating these patterns based on their occurrence and performance.
 
 **Evaluating Performance:**
 
@@ -104,7 +104,7 @@ While the hybrid offers granular insights, for the purposes, the Triple Barrier 
 
 The primary objective is to validate that the observed patterns transcend random events and hold genuine predictive power. To achieve this, we used the following evaluation measures:
 
-- **Success Rates**: We analyzed distinct patterns like double top, double top, among others, calculating their success using:
+- **Success Rates**: We analyzed distinct patterns like double bottom, double top, among others, calculating their success using:
   $$ \text{Success Rate} = \frac{\text{Successful occurrences}}{\text{Total occurrences}} $$
   Comparisons were drawn against both main and random data to evaluate pattern reliability versus random instances.
 
@@ -140,7 +140,7 @@ This section distills the findings from the examination of various trading patte
 
 ![Head and shoulders win rate](../../results/output_14/svg/balanced/by-range_barriers_head-and-shoulders.svg){#fig:barrier_head_and_shoulders}
 
-**Temporal Analysis:** An year-over-year analysis revealed subtle trends in pattern performance. For instance, the double top pattern demonstrated a slight but consistent decline in its win rate over the years (Figure \ref{fig:yoy_double_bottom}), albeit not reaching statistical significance. The double top and other patterns, when analyzed year-over-year, similarly exhibited trends that did not achieve statistical significance.
+**Temporal Analysis:** An year-over-year analysis revealed subtle trends in pattern performance. For instance, the double bottom pattern demonstrated a slight but consistent decline in its win rate over the years (Figure \ref{fig:yoy_double_bottom}), albeit not reaching statistical significance. The double top and other patterns, when analyzed year-over-year, similarly exhibited trends that did not achieve statistical significance.
 
 ![Year-over-year win rate for double bottom.](../../scripts/pattern-statistics/figures/yoy_perf_double-bottom.svg){#fig:yoy_double_bottom}
 
